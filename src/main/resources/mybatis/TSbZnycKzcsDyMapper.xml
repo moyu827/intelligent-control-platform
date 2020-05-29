@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.axy.intelligentcontrolplatform.standing.mapper.TSbZnycKzcsDyMapper">
+
+    <select id="getPartsParamDefine"
+            resultType="com.axy.intelligentcontrolplatform.standing.entity.TSbZnycKzcsDy">
+        SELECT
+        t1.sblx sblxName,
+        t.*
+        FROM
+        t_sb_znyc_kzcs_dy t
+        LEFT JOIN t_dw_bzzx_sbfl t1 ON t.sblx = t1.sblxbm
+        <where>
+            <if test="objId != null and objId != ''">
+                and t.obj_id= #{objId}
+            </if>
+            <if test="sblx != null and sblx != ''">
+                and t.sblx= #{sblx}
+            </if>
+            <if test="csmc != null and csmc != ''">
+                and t.csmc like concat(concat('%',#{csmc}),'%')
+            </if>
+        </where>
+    </select>
+    <select id="getPartsParamDefineCount" resultType="java.lang.Integer">
+        SELECT
+        count(0)
+        FROM
+        t_sb_znyc_kzcs_dy t
+        LEFT JOIN t_dw_bzzx_sbfl t1 ON t.sblx = t1.sblxbm
+        <where>
+            <if test="objId != null and objId != ''">
+                and t.obj_id= #{objId}
+            </if>
+            <if test="sblx != null and sblx != ''">
+                and t.sblx= #{sblx}
+            </if>
+            <if test="csmc != null and csmc != ''">
+                and t.csmc like concat(concat('%',#{csmc}),'%')
+            </if>
+        </where>
+    </select>
+    <select id="selectPartsParamDefine"
+            resultType="com.axy.intelligentcontrolplatform.standing.entity.TSbZnycKzcsDy">
+        SELECT
+        t.obj_id,
+        t.csmc
+        FROM
+        t_sb_znyc_kzcs_dy t
+        <where>
+            t.obj_id is not null and t.csmc is not null
+            <if test="objId != null and objId != ''">
+                and t.obj_id= #{objId}
+            </if>
+            <if test="csmc != null and csmc != ''">
+                and t.csmc concat(concat('%',#{csmc}),'%')
+            </if>
+        </where>
+    </select>
+</mapper>

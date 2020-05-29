@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.axy.intelligentcontrolplatform.experiment.mapper.TZhZtjxSymbxbMapper">
+
+    <select id="getTempItems" resultType="com.axy.intelligentcontrolplatform.experiment.entity.TZhZtjxSymbxb">
+        SELECT
+            t.*
+        FROM
+            t_zh_ztjx_symbxb t
+        LEFT JOIN t_zh_ztjx_symbxm t1 ON t.mbxmid = t1.obj_id
+        <where>
+            <if test="objId != null and objId != '' ">
+                and t.obj_id= #{objId}
+            </if>
+            <if test="syxb != null and syxb != '' ">
+                and t.syxb like concat(concat('%',#{syxb}),'%')
+            </if>
+        </where>
+    </select>
+    <select id="getTempItemsCount" resultType="java.lang.Integer">
+        SELECT
+            count(0)
+        FROM
+            t_zh_ztjx_symbxb t
+        LEFT JOIN t_zh_ztjx_symbxm t1 ON t.mbxmid = t1.obj_id
+        <where>
+            <if test="objId != null and objId != '' ">
+                and t.obj_id= #{objId}
+            </if>
+            <if test="syxb != null and syxb != '' ">
+                and t.syxb like concat(concat('%',#{syxb}),'%')
+            </if>
+        </where>
+    </select>
+    <select id="getTempItemsById" resultType="com.axy.intelligentcontrolplatform.experiment.entity.TZhZtjxSymbxb">
+        SELECT
+            t1.xh orderId,
+            t1.obj_id,
+            t1.syxb,
+            t1.sbxb
+        FROM
+            t_zh_ztjx_syxm t
+        LEFT JOIN t_zh_ztjx_symbxm t2 ON t.obj_id = t2.syxmid
+        LEFT JOIN t_zh_ztjx_symbxb t1 ON t1.mbxmid = t2.obj_id where t.obj_id =#{objId}
+        ORDER BY t1.xh
+    </select>
+    <select id="getTempItemsByIdCount" resultType="java.lang.Integer">
+        SELECT
+            count(0)
+        FROM
+            t_zh_ztjx_syxm t
+        LEFT JOIN t_zh_ztjx_symbxm t2 ON t.obj_id = t2.syxmid
+        LEFT JOIN t_zh_ztjx_symbxb t1 ON t1.mbxmid = t2.obj_id where t.obj_id =#{objId}
+        ORDER BY t1.xh
+    </select>
+</mapper>

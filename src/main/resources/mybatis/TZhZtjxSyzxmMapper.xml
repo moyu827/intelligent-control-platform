@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.axy.intelligentcontrolplatform.experiment.mapper.TZhZtjxSyzxmMapper">
+
+    <select id="getSubProjectCount" resultType="java.lang.Integer">
+        SELECT
+            count(0)
+        FROM
+            t_zh_ztjx_syzxm t
+        <where>
+            <if test="objId != null and objId != '' ">
+                and t.obj_id= #{objId}
+            </if>
+            <if test="mc != null and mc != '' ">
+                and t.mc like concat(concat('%',#{mc}),'%')
+            </if>
+        </where>
+    </select>
+    <select id="getSubProject" resultType="com.axy.intelligentcontrolplatform.experiment.entity.TZhZtjxSyzxm">
+        SELECT
+            *
+        FROM
+            t_zh_ztjx_syzxm t
+        <where>
+            <if test="objId != null and objId != '' ">
+                and t.obj_id= #{objId}
+            </if>
+            <if test="mc != null and mc != '' ">
+                and t.mc like concat(concat('%',#{mc}),'%')
+            </if>
+        </where>
+    </select>
+    <select id="getSubProjectByProjectId" resultType="com.axy.intelligentcontrolplatform.experiment.entity.TZhZtjxSyzxm">
+            SELECT
+                t2.xh orderId,
+            -- 	t.obj_id xmid,
+            -- 	t.mc xmmc,
+                t1.obj_id,
+                t1.mc
+            FROM
+             t_zh_ztjx_syxm t
+            LEFT JOIN t_zh_ztjx_syxmzxm t2 ON t2.syxmid = t.obj_id
+            LEFT JOIN t_zh_ztjx_syzxm t1 ON t1.obj_id = t2.syzxmid WHERE t.obj_id = #{objId}
+            ORDER BY t2.xh;
+    </select>
+</mapper>

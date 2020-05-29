@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.axy.intelligentcontrolplatform.bus.mapper.SubControlAreaMapper">
+    <select id="getSubControlAreaCount" resultType="int" parameterType="com.axy.intelligentcontrolplatform.bus.requestParam.SubControlAreaParam">
+       SELECT
+            count( 0 )
+        FROM
+            bus_sub_control_area a1
+            LEFT JOIN bus_sub_control_area a2 ON a1.parent_id = a2.id
+        <where>
+            <if test="id != null">
+                and a1.id= #{id}
+            </if>
+            <if test="name !=null and name !=''">
+                and a1.`name` like '%${name}%'
+            </if>
+            <if test="parentId != null">
+                and a1.parent_id = #{parentId}
+            </if>
+            <if test="type != null">
+                and a1.type = #{type}
+            </if>
+            <if test="types != null">
+                and a1.type in
+                <foreach collection="types" item="item" index="index" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+
+    </select>
+
+    <select id="getSubControlAreas" resultType="com.axy.intelligentcontrolplatform.bus.entity.SubControlArea" parameterType="com.axy.intelligentcontrolplatform.bus.requestParam.SubControlAreaParam">
+        SELECT
+            id,
+            `name`,
+            parentId,
+            parentName,
+            type
+        FROM
+            (
+        SELECT
+            a1.id,
+            a1.`name`,
+            a1.parent_id parentId,
+            a2.`name` parentName,
+            a1.type
+        FROM
+            bus_sub_control_area a1
+            LEFT JOIN bus_sub_control_area a2 ON a1.parent_id = a2.id
+            <where>
+                <if test="id != null">
+                    and a1.id= #{id}
+                </if>
+                <if test="name !=null and name !=''">
+                    and a1.`name` like '%${name}%'
+                </if>
+                <if test="parentId != null">
+                    and a1.parent_id = #{parentId}
+                </if>
+                <if test="type != null">
+                    and a1.type = #{type}
+                </if>
+                <if test="types != null">
+                    and a1.type in
+                    <foreach collection="types" item="item" index="index" open="(" close=")" separator=",">
+                        #{item}
+                    </foreach>
+                </if>
+            </where>
+            ) s
+        ORDER BY
+            id ASC
+    </select>
+    <update id="removeChildParentId">
+        UPDATE bus_sub_control_area
+        SET parent_id = NULL
+        WHERE
+            parent_id = #{parentId}
+    </update>
+</mapper>

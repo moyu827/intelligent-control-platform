@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.axy.intelligentcontrolplatform.standing.mapper.TDwBzzxGgdmbMapper">
+
+    <select id="getCommonCode" resultType="com.axy.intelligentcontrolplatform.standing.entity.TDwBzzxGgdmb">
+        SELECT
+        t1.bzflmc bzflName,
+        t.*
+        FROM
+        t_dw_bzzx_ggdmb t
+        LEFT JOIN t_dw_bzzx_bzflb t1 ON t.bzflid = t1.obj_id
+        <where>
+            <if test="objId != null and objId != ''">
+                and t.obj_id= #{objId}
+            </if>
+            <if test="dm != null and dm != '' ">
+                and t.dm= #{dm}
+            </if>
+            <if test="dmmc != null and dmmc != ''">
+                and t.dmmc like concat(concat('%',#{dmmc}),'%')
+            </if>
+        </where>
+    </select>
+    <select id="getCommonCodeCount" resultType="java.lang.Integer">
+        SELECT
+        count(0)
+        FROM
+        t_dw_bzzx_ggdmb t
+        LEFT JOIN t_dw_bzzx_bzflb t1 ON t.bzflid = t1.obj_id
+        <where>
+            <if test="objId != null and objId != ''">
+                and t.obj_id= #{objId}
+            </if>
+            <if test="dm != null and dm != '' ">
+                and t.dm= #{dm}
+            </if>
+            <if test="dmmc != null and dmmc != ''">
+                and t.dmmc like concat(concat('%',#{dmmc}),'%')
+            </if>
+        </where>
+    </select>
+</mapper>

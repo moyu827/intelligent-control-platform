@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.axy.intelligentcontrolplatform.standing.mapper.TDwBzzxBzflbMapper">
+
+    <select id="getNormalSort" resultType="com.axy.intelligentcontrolplatform.standing.entity.TDwBzzxBzflb">
+        SELECT
+        t1.bzflmc parentName,
+        t.*
+        FROM
+        t_dw_bzzx_bzflb t
+        LEFT JOIN t_dw_bzzx_bzflb t1 ON t.sjflid = t1.obj_id
+        <where>
+            <if test="objId != null and objId != ''">
+                and t.obj_id= #{objId}
+            </if>
+            <if test="bzflbm != null and bzflbm != ''">
+                and t.bzflbm= #{bzflbm}
+            </if>
+            <if test="bzflmc != null and bzflmc != ''">
+                and t.bzflmc like concat(concat('%',#{bzflmc}),'%')
+            </if>
+        </where>
+    </select>
+    <select id="getNormalSortCount" resultType="java.lang.Integer">
+        SELECT
+        count(0)
+        FROM
+        t_dw_bzzx_bzflb t
+        LEFT JOIN t_dw_bzzx_bzflb t1 ON t.sjflid = t1.obj_id
+        <where>
+            <if test="objId != null and objId != ''">
+                and t.obj_id= #{objId}
+            </if>
+            <if test="bzflbm != null and bzflbm != ''">
+                and t.bzflbm= #{bzflbm}
+            </if>
+            <if test="bzflmc != null and bzflmc != ''">
+                and t.bzflmc like concat(concat('%',#{bzflmc}),'%')
+            </if>
+        </where>
+    </select>
+    <select id="selectNormalSort" resultType="com.axy.intelligentcontrolplatform.standing.entity.TDwBzzxBzflb">
+        SELECT
+        t.obj_id,
+        t.bzflbm,
+        t.bzflmc
+        FROM t_dw_bzzx_bzflb t
+        <where>
+            t.bzflbm is not null and t.bzflmc is not null
+            <if test="bzflbm != null and bzflbm != ''">
+                and t.bzflbm= #{bzflbm}
+            </if>
+            <if test="bzflmc != null and bzflmc != ''">
+                and t.bzflmc like concat(concat('%',#{bzflmc}),'%')
+            </if>
+        </where>
+    </select>
+</mapper>

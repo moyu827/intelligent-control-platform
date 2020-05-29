@@ -1,0 +1,58 @@
+server:
+  port: 8081
+  undertow:
+    io-threads: 4
+    worker-threads: 20
+    buffer-size: 1024
+    direct-buffers: true
+jwt:
+  header: Authorization
+  secret: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXUyJ9eyJpc3MiOiJhdXRoMCJ9AbIJTDMFc7yUa5MhvcP03nJPyCPzZtQcGEpzWfOkEE
+  expiration: 604800
+  tokenHead: "Bearer "
+arcsoft:
+  dll-dir: E:\arcsoft_lib
+  appid: AnHoyC2LkhjJ82MvMtq9cqdKhSUBNS21h6pWVj5dHvc
+  appkey: 9agx45XgYGA8eBy6Gdb3Zqnb82sRLGoLBshFj7SrXCtJ
+spring:
+  application:
+    name: intelligent-control-platform
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+  servlet:
+    multipart:
+      max-request-size: -1
+      max-file-size: -1
+  datasource:
+    name: intelligent-control-platform
+    url: jdbc:mysql://63.10.101.128:3306/intelligent_control_platform?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF8&allowMultiQueries=true&useSSL=false
+#    url: jdbc:mysql://127.0.0.1:3306/intelligent_control_platform?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF8&allowMultiQueries=true&useSSL=false
+#    url: jdbc:dm://63.10.101.178:5236/
+    username: root
+    password: axy2020
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 10
+      pool-name: MyHikariCP
+mybatis-plus:
+  configuration:
+    #生产环境关闭打印sql
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    cache-enabled: false
+    call-setters-on-nulls: true
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath*:/mybatis/*.xml
+redis:
+  database: 3
+  host: 127.0.0.1
+  post: 6379
+  password:
+  timeout: 20000
+  pool:
+    max-active: 8
+    max-idle: 8
+    min-idle: 0
+    max-wait: -1

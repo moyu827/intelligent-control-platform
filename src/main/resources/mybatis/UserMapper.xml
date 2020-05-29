@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.axy.intelligentcontrolplatform.sys.mapper.UserMapper">
+    <select id="getUser" resultType="com.axy.intelligentcontrolplatform.sys.entity.User">
+        SELECT
+            u.id id,
+            u.username username,
+            u.`password` password,
+            GROUP_CONCAT( DISTINCT a.`name` SEPARATOR ',' ) authNameStr,
+            GROUP_CONCAT( DISTINCT r.`name` SEPARATOR ',' ) roleStr,
+            GROUP_CONCAT( DISTINCT r.`id` SEPARATOR ',' ) roleIdStr
+        FROM
+            sys_user u
+            LEFT JOIN sys_ref_user_role ur ON ur.userId = u.id
+            LEFT JOIN sys_ref_role_auth ra ON ur.roleId = ra.roleId
+            LEFT JOIN sys_auth a ON ra.authId = a.id
+            LEFT JOIN sys_role r ON ur.roleId = r.id
+        WHERE
+            u.username = #{username}
+        GROUP BY
+            ur.userId
+    </select>
+</mapper>

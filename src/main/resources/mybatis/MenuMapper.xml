@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.axy.intelligentcontrolplatform.sys.mapper.MenuMapper">
+    <select id="getCurrentUserMenu" resultType="com.axy.intelligentcontrolplatform.sys.entity.Menu">
+        SELECT
+            m.menu_id menuId,
+            m.parent_id parentId,
+            m.`name`,
+            m.url,
+            m.type,
+            m.icon,
+            m.order_num orderNum
+        FROM
+            sys_ref_role_menu rm
+            LEFT JOIN sys_menu m ON rm.menu_id = m.menu_id
+        WHERE
+            rm.role_id IN (${roleIdStr})
+            	ORDER BY m.order_num
+    </select>
+    <select id="getMenus" resultType="com.axy.intelligentcontrolplatform.sys.entity.Menu" parameterType="com.axy.intelligentcontrolplatform.sys.requestParam.MenuParam">
+         SELECT
+            m.menu_id menuId,
+            m.parent_id parentId,
+            m.`name`,
+            sm.`name` parentName,
+            m.url,
+            m.type,
+            m.icon,
+            m.order_num orderNum
+        FROM
+            sys_menu m
+            LEFT JOIN sys_menu sm ON m.parent_id = sm.menu_id
+       <where>
+           <if test="id != null">
+              and m.menu_id = #{id}
+           </if>
+           <if test="type != null">
+              and m.type = #{type}
+           </if>
+       </where>
+        ORDER BY m.order_num
+
+    </select>
+</mapper>
