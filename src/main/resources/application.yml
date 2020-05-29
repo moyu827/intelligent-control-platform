@@ -27,9 +27,7 @@ spring:
       max-file-size: -1
   datasource:
     name: intelligent-control-platform
-    url: jdbc:mysql://63.10.101.128:3306/intelligent_control_platform?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF8&allowMultiQueries=true&useSSL=false
-#    url: jdbc:mysql://127.0.0.1:3306/intelligent_control_platform?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF8&allowMultiQueries=true&useSSL=false
-#    url: jdbc:dm://63.10.101.178:5236/
+    url: jdbc:mysql://127.0.0.1:3306/intelligent_control_platform?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF8&allowMultiQueries=true&useSSL=false
     username: root
     password: axy2020
     driver-class-name: com.mysql.cj.jdbc.Driver
