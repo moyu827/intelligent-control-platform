@@ -1,9 +1,6 @@
 package com.axy.intelligentcontrolplatform;
 
 import com.axy.intelligentcontrolplatform.basic.utils.IdGenerator;
-import com.axy.intelligentcontrolplatform.bus.entity.PowerDevModel;
-import com.axy.intelligentcontrolplatform.bus.requestParam.PowerDevModelParam;
-import com.axy.intelligentcontrolplatform.bus.service.IPowerDevModelService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,8 +15,6 @@ class IntelligentControlPlatformApplicationTests {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private IPowerDevModelService powerDevModelService;
 
     @Autowired
     private RedisTemplate<String,Object> redisTemplate;
@@ -62,18 +57,6 @@ class IntelligentControlPlatformApplicationTests {
 
     }
 
-    @Test
-    void addPowerDevModel(){
-        PowerDevModelParam powerDevModelParam = new PowerDevModelParam();
-
-//        powerDevModelParam.setId(1235456L);
-//        powerDevModelParam.setName("ab");
-//        powerDevModelParam.setTypeId(2558478L);
-//        powerDevModelParam.setManufacturerId(5668656554L);
-        powerDevModelParam.setCurrentPage(2);
-        powerDevModelParam.setPageSize(20);
-        powerDevModelService.getPowerDevModels(powerDevModelParam);
-    }
 
     @Test
     void redis(){
